@@ -8,3 +8,5 @@ bin: \
 testbin: \
 	target/test-classes
 
+Private-Package: net.bbmsoft.fx.controls.skin
+Export-Package: net.bbmsoft.fx.controls
