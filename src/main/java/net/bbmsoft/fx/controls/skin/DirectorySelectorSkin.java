@@ -44,7 +44,7 @@ public class DirectorySelectorSkin extends SkinBase<DirectorySelector> {
 		control.selectedDirectoryProperty().addListener(this.selectedDirectoryListener);
 		updatePathField(control.getSelectedDirectory());
 
-		this.titleListener = (o, ov, nv) -> this.pathField.setPromptText(nv);
+		this.titleListener = (o, ov, nv) -> this.pathField.setPromptText(nv != null && !nv.trim().isEmpty() ? nv + " path" : null);
 		control.titleProperty().addListener(titleListener);
 		this.pathField.setPromptText(control.getTitle());
 
