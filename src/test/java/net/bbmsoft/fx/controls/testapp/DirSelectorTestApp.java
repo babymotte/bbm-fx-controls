@@ -5,7 +5,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import net.bbmsoft.fx.controls.DirectorySelector;
 
-public class TestApp extends Application {
+public class DirSelectorTestApp extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
