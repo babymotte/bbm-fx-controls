@@ -2,13 +2,28 @@ package net.bbmsoft.fx.controls;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 
 public class ResizableCanvas extends Canvas {
 
 	public final static double USE_COMPUTED_SIZE = (-1);
 	public final static double USE_PREF_SIZE = Double.NEGATIVE_INFINITY;
+
+	public ResizableCanvas() {
+
+		this.widthProperty().addListener((o, ov, nv) -> {
+			GraphicsContext g = this.getGraphicsContext2D();
+			g.clearRect(0, 0, ov.doubleValue(), this.getHeight());
+		});
+
+		this.heightProperty().addListener((o, ov, nv) -> {
+			GraphicsContext g = this.getGraphicsContext2D();
+			g.clearRect(0, 0, this.getWidth(), ov.doubleValue());
+		});
+	}
 
 	@Override
 	public double prefWidth(double height) {
@@ -126,6 +141,36 @@ public class ResizableCanvas extends Canvas {
 	public void resize(double newWidth, double newHeight) {
 		this.setWidth(newWidth);
 		this.setHeight(newHeight);
+	}
+	
+	private BooleanProperty autoClearOnResizeProperty;
+	private boolean _autoClearOnResize = true;
+
+	public final BooleanProperty autoClearOnResizeProperty() {
+
+		if (this.autoClearOnResizeProperty == null) {
+			this.autoClearOnResizeProperty = new SimpleBooleanProperty(this, "autoClearOnResize", this._autoClearOnResize);
+		}
+
+		return this.autoClearOnResizeProperty;
+	}
+
+	public final boolean getAutoClearOnResize() {
+
+		if (this.autoClearOnResizeProperty != null) {
+			return this.autoClearOnResizeProperty.get();
+		} else {
+			return this._autoClearOnResize;
+		}
+	}
+
+	public final void setAutoClearOnResize(final boolean value) {
+
+		if (this.autoClearOnResizeProperty != null) {
+			this.autoClearOnResizeProperty.set(value);
+		} else {
+			this._autoClearOnResize = value;
+		}
 	}
 
 	private DoubleProperty prefWidthProperty;
